@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.drivetrain;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
@@ -62,6 +61,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     );
 
     /* SysId routine for characterizing steer. This is used to find PID gains for the steer motors. */
+    @SuppressWarnings("unused")
     private final SysIdRoutine m_sysIdRoutineSteer = new SysIdRoutine(
         new SysIdRoutine.Config(
             null,        // Use default ramp rate (1 V/s)
@@ -82,6 +82,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      * This is used to find PID gains for the FieldCentricFacingAngle HeadingController.
      * See the documentation of SwerveRequest.SysIdSwerveRotation for info on importing the log to SysId.
      */
+    @SuppressWarnings("unused")
     private final SysIdRoutine m_sysIdRoutineRotation = new SysIdRoutine(
         new SysIdRoutine.Config(
             /* This is in radians per second², but SysId only supports "volts per second" */
