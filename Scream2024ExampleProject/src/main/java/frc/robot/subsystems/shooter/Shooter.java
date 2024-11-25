@@ -41,8 +41,8 @@ public class Shooter extends SubsystemBase {
             DCMotor.getFalcon500(1));
 
     public enum State {
-        IDLE(() -> DegreesPerSecond.of(0)),
-        SHOOTING(() -> DegreesPerSecond.of(5800));
+        IDLE(() -> RotationsPerSecond.of(0)),
+        SHOOTING(() -> RotationsPerSecond.of(5800));
 
         private final Supplier<AngularVelocity> velocitySupplier;
 
@@ -52,7 +52,7 @@ public class Shooter extends SubsystemBase {
 
         @Override
         public String toString() {
-            return name().toLowerCase() + " (" + velocitySupplier.get() + ")";
+            return name().toLowerCase() + " (" + velocitySupplier.get().in(RotationsPerSecond) + ")";
         }
     }
 
@@ -104,7 +104,7 @@ public class Shooter extends SubsystemBase {
             return;
         }
 
-        DogLog.log("Shooter/State", state);
+        DogLog.log("Shooter/State", state.toString());
         DogLog.log("Shooter/AtGoal", atGoal().getAsBoolean());
 
         DogLog.log("Shooter/Velocity", shooterMasterMotor.getVelocity().getValueAsDouble());

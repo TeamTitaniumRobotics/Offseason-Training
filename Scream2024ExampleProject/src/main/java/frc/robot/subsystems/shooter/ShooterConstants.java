@@ -12,8 +12,8 @@ public class ShooterConstants {
     public static final String SLAVE_MOTOR_CANBUS = "rio";
     public static final boolean SLAVE_MOTOR_INVERTED = false;
 
-    public static final Gains SHOOTER_GAINS = new Gains(0, 0, 0, 0, 0, 0);
-    public static final TrapezoidalConstraints SHOOTER_CONSTRAINTS = new TrapezoidalConstraints(0, 0);
+    public static final Gains SHOOTER_GAINS = new Gains(0, 0, 0, 10000, 0, 0);
+    public static final TrapezoidalConstraints SHOOTER_CONSTRAINTS = new TrapezoidalConstraints(1000000, 1000000);
 
     public static final double GEAR_RATIO = 1;
 
