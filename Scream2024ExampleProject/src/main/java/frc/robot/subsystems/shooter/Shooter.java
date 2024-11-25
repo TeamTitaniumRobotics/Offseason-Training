@@ -1,6 +1,5 @@
 package frc.robot.subsystems.shooter;
 
-import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.util.function.Supplier;
