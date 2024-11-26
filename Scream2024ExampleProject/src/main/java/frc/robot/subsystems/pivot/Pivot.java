@@ -37,7 +37,7 @@ public class Pivot extends SubsystemBase {
         STOW(() -> Degrees.of(0.0)),
         INTAKE_REGULAR(() -> Degrees.of(0.0)),
         INTAKE_TRAP(() -> Degrees.of(0.0)),
-        AMP(() -> Degrees.of(0.0)),
+        AMP(() -> Degrees.of(15.0)),
         SHOOT(() -> Degrees.of(0.0)),
         FEED(() -> Degrees.of(0.0)),
         TRAP(() -> Degrees.of(0.0)),;
@@ -104,7 +104,7 @@ public class Pivot extends SubsystemBase {
         DogLog.log("ShooterPivot/State", state.toString());
         DogLog.log("ShooterPivot/AtGoal", atGoal().getAsBoolean());
 
-        DogLog.log("ShooterPivot/Position", pivotMotor.getRotorPosition().getValueAsDouble());
+        DogLog.log("ShooterPivot/Position", pivotMotor.getPosition().getValueAsDouble());
         DogLog.log("ShooterPivot/Velocity", pivotMotor.getVelocity().getValueAsDouble());
         DogLog.log("ShooterPivot/StatorCurrent", pivotMotor.getStatorCurrent().getValueAsDouble());
         DogLog.log("ShooterPivot/SupplyCurrent", pivotMotor.getSupplyCurrent().getValueAsDouble());

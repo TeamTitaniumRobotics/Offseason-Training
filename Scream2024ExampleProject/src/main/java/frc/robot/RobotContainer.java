@@ -83,6 +83,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return autoChooser.getSelectedAutoRoutine();
+        // return autoChooser.getSelectedAutoRoutine();
+        return pivot.setState(Pivot.State.AMP);
     }
 }
