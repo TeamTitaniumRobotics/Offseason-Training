@@ -7,38 +7,58 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+
+import choreo.Choreo;
+import choreo.auto.AutoChooser;
+import choreo.auto.AutoFactory;
+import choreo.util.AllianceFlipUtil;
+
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.drivetrain.CommandSwerveDrivetrain;
+import frc.robot.commands.AutoRoutines;
+import frc.robot.subsystems.drivetrain.Swerve;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.utils.TunerConstants;
 
 public class RobotContainer {
-    private final double MAX_SPEED_METERS_PER_SEC = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts
-                                                                                                        // desired top
-                                                                                                        // speed
-    private final double MAX_ANGULAR_SPEED_RAD_PER_SEC = 8.0; // 3/4 of a rotation per second max angular velocity
+    private final double MAX_SPEED_METERS_PER_SEC = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    private final double MAX_ANGULAR_SPEED_RAD_PER_SEC = 8.0;
 
-    /* Setting up bindings for necessary control of the swerve drive platform */
+    // Swerve drive request objects
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MAX_SPEED_METERS_PER_SEC * 0.1).withRotationalDeadband(MAX_ANGULAR_SPEED_RAD_PER_SEC * 0.1) // Add
-                                                                                                                      // a
-                                                                                                                      // 10%
-                                                                                                                      // deadband
+            .withDeadband(MAX_SPEED_METERS_PER_SEC * 0.1).withRotationalDeadband(MAX_ANGULAR_SPEED_RAD_PER_SEC * 0.1)
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
+    // Controllers
     private final CommandXboxController driver = new CommandXboxController(0);
 
-    private final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    // Subsystems
+    private final Swerve drivetrain = TunerConstants.createDrivetrain();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
 
+    // Auto-related objects
+    private final AutoRoutines autoRoutines = new AutoRoutines(drivetrain);
+    private final AutoFactory autoFactory;
+    public final AutoChooser autoChooser;
+
     public RobotContainer() {
+        autoFactory = Choreo.createAutoFactory(
+                drivetrain,
+                () -> drivetrain.getState().Pose,
+                drivetrain::followPath,
+                AllianceFlipUtil::shouldFlip,
+                new AutoFactory.AutoBindings());
+
+        autoChooser = new AutoChooser(autoFactory, "");
+
+        autoChooser.addAutoRoutine("Five Piece Auto", autoRoutines::fivePieceAutoTriggerSeg);
+
         configureBindings();
     }
 
@@ -62,6 +82,6 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
+        return autoChooser.getSelectedAutoRoutine();
     }
 }
