@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase {
     private State state = State.IDLE;
 
     private final FlywheelSim sim = new FlywheelSim(
-            LinearSystemId.createFlywheelSystem(DCMotor.getFalcon500(1), 0.00599676919909 + 0.0001, GEAR_RATIO),
+            LinearSystemId.createFlywheelSystem(DCMotor.getFalcon500(1), 0.00599676919909 + 0.0001, SHOOTER_GEAR_RATIO),
             DCMotor.getFalcon500(1));
 
     public enum State {
@@ -56,9 +56,9 @@ public class Shooter extends SubsystemBase {
     }
 
     public Shooter() {
-        shooterMasterMotor = new TalonFX(MASTER_MOTOR_ID, MASTER_MOTOR_CANBUS);
-        shooterSlaveMotor = new TalonFX(SLAVE_MOTOR_ID, SLAVE_MOTOR_CANBUS);
-        shooterSlaveMotor.setControl(new Follower(MASTER_MOTOR_ID, SLAVE_MOTOR_INVERTED));
+        shooterMasterMotor = new TalonFX(SHOOTER_MASTER_MOTOR_ID, SHOOTER_MASTER_MOTOR_CANBUS);
+        shooterSlaveMotor = new TalonFX(SHOOTER_SLAVE_MOTOR_ID, SHOOTER_SLAVE_MOTOR_CANBUS);
+        shooterSlaveMotor.setControl(new Follower(SHOOTER_MASTER_MOTOR_ID, SHOOTER_SLAVE_MOTOR_INVERTED));
 
         config = new TalonFXConfiguration();
 
@@ -72,7 +72,7 @@ public class Shooter extends SubsystemBase {
         config.MotionMagic.MotionMagicAcceleration = SHOOTER_CONSTRAINTS.maxAcceleration();
         config.MotionMagic.MotionMagicCruiseVelocity = SHOOTER_CONSTRAINTS.maxVelocity();
 
-        config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED ? InvertedValue.Clockwise_Positive
+        config.MotorOutput.Inverted = SHOOTER_MASTER_MOTOR_INVERTED ? InvertedValue.Clockwise_Positive
                 : InvertedValue.CounterClockwise_Positive;
 
         shooterMasterMotor.getConfigurator().apply(config);
@@ -106,6 +106,7 @@ public class Shooter extends SubsystemBase {
         DogLog.log("Shooter/State", state.toString());
         DogLog.log("Shooter/AtGoal", atGoal().getAsBoolean());
 
+        DogLog.log("Shooter/Position", shooterMasterMotor.getRotorPosition().getValueAsDouble());
         DogLog.log("Shooter/Velocity", shooterMasterMotor.getVelocity().getValueAsDouble());
         DogLog.log("Shooter/StatorCurrent", shooterMasterMotor.getStatorCurrent().getValueAsDouble());
         DogLog.log("Shooter/SupplyCurrent", shooterMasterMotor.getSupplyCurrent().getValueAsDouble());
