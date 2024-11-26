@@ -57,6 +57,8 @@ public class RobotContainer {
 
         autoChooser = new AutoChooser(autoFactory, "");
 
+        autoChooser.addAutoRoutine("Five Piece Auto", autoRoutines::fivePieceAutoTriggerSeg);
+
         configureBindings();
     }
 
