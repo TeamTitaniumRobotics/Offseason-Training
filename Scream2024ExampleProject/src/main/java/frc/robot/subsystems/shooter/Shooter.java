@@ -8,7 +8,6 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.NeutralOut;
-import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
@@ -30,7 +29,6 @@ public class Shooter extends SubsystemBase {
     private final TalonFXConfiguration config;
 
     private final MotionMagicVelocityVoltage motionMagicVelocityVoltage = new MotionMagicVelocityVoltage(0);
-    private final VoltageOut voltageOut = new VoltageOut(0);
     private final NeutralOut neutralOut = new NeutralOut();
 
     private State state = State.IDLE;
@@ -98,7 +96,7 @@ public class Shooter extends SubsystemBase {
                 RotationsPerSecond.of(600)));
     }
 
-    public void displayInfo(boolean debug) {
+    private void displayInfo(boolean debug) {
         if (!debug) {
             return;
         }
