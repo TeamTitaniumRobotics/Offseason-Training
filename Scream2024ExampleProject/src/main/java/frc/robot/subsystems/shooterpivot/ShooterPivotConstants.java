@@ -1,4 +1,4 @@
-package frc.robot.subsystems.pivot;
+package frc.robot.subsystems.shooterpivot;
 
 import static edu.wpi.first.units.Units.Inches;
 
@@ -6,7 +6,7 @@ import edu.wpi.first.units.measure.Distance;
 import frc.robot.utils.TitaniumUtils.Gains;
 import frc.robot.utils.TitaniumUtils.TrapezoidalConstraints;
 
-public class PivotConstants {
+public class ShooterPivotConstants {
     public static final int PIVOT_MOTOR_ID = 30;
     public static final String PIVOT_MOTOR_CANBUS = "rio";
     public static final boolean PIVOT_MOTOR_INVERTED = false;
