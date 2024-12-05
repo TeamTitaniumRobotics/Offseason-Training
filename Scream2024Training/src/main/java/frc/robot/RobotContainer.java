@@ -19,9 +19,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.AutoRoutines;
 import frc.robot.subsystems.drivetrain.Swerve;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.pivot.Pivot;
-import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.utils.TunerConstants;
 
 public class RobotContainer {
@@ -39,9 +36,6 @@ public class RobotContainer {
 
     // Subsystems
     private final Swerve drivetrain = TunerConstants.createDrivetrain();
-    private final Shooter shooter = new Shooter();
-    private final Intake intake = new Intake();
-    private final Pivot pivot = new Pivot();
 
     // Auto-related objects
     private final AutoRoutines autoRoutines = new AutoRoutines(drivetrain);
@@ -73,17 +67,10 @@ public class RobotContainer {
 
         driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
-        driver.a().toggleOnTrue(shooter.setState(Shooter.State.SHOOTING));
-
-        driver.leftTrigger().onTrue(intake.setState(Intake.State.INTAKING));
-
-        driver.leftBumper().onTrue(intake.setState(Intake.State.IDLE));
-
         drivetrain.registerTelemetry(RobotState::telemeterizeDrivetrain);
     }
 
     public Command getAutonomousCommand() {
-        // return autoChooser.getSelectedAutoRoutine();
-        return pivot.setState(Pivot.State.AMP);
+        return autoChooser.getSelectedAutoRoutine();
     }
 }
