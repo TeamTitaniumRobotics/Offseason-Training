@@ -1,4 +1,4 @@
-package frc.robot.subsystems.pivot;
+package frc.robot.subsystems.shooterpivot;
 
 import java.util.function.Supplier;
 
@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.robot.subsystems.pivot.PivotConstants.*;
+import static frc.robot.subsystems.shooterpivot.ShooterPivotConstants.*;
 
-public class Pivot extends SubsystemBase {
+public class ShooterPivot extends SubsystemBase {
     private final TalonFX pivotMotor;
 
     private final TalonFXConfiguration config;
@@ -54,7 +54,7 @@ public class Pivot extends SubsystemBase {
         }
     }
 
-    public Pivot() {
+    public ShooterPivot() {
         pivotMotor = new TalonFX(PIVOT_MOTOR_ID, PIVOT_MOTOR_CANBUS);
 
         config = new TalonFXConfiguration();
