@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.AutoRoutines;
 import frc.robot.subsystems.drivetrain.Swerve;
+import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooterpivot.ShooterPivot;
@@ -42,6 +43,7 @@ public class RobotContainer {
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
     private final ShooterPivot pivot = new ShooterPivot();
+    private final Elevator elevator = new Elevator();
 
     // Auto-related objects
     private final AutoRoutines autoRoutines = new AutoRoutines(drivetrain);
@@ -78,6 +80,8 @@ public class RobotContainer {
         driver.leftTrigger().onTrue(intake.setState(Intake.State.INTAKING));
 
         driver.leftBumper().onTrue(intake.setState(Intake.State.IDLE));
+
+        driver.a().whileTrue(elevator.setState(Elevator.State.AMP));
 
         drivetrain.registerTelemetry(RobotState::telemeterizeDrivetrain);
     }

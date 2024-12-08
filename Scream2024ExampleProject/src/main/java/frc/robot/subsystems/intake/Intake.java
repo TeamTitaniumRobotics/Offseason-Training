@@ -83,7 +83,7 @@ public class Intake extends SubsystemBase {
                 .debounce(0.25);
     }
 
-    public void displayInfo(boolean debug) {
+    private void displayInfo(boolean debug) {
         if (!debug) {
             return;
         }
