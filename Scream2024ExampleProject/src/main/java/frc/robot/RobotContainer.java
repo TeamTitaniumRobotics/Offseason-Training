@@ -81,7 +81,7 @@ public class RobotContainer {
 
         driver.leftBumper().onTrue(intake.setState(Intake.State.IDLE));
 
-        driver.a().whileTrue(elevator.setState(Elevator.State.AMP));
+        driver.a().whileTrue(elevator.setState(Elevator.State.EJECT));
 
         drivetrain.registerTelemetry(RobotState::telemeterizeDrivetrain);
     }

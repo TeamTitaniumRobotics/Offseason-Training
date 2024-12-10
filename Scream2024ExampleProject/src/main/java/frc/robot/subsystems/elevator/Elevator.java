@@ -54,7 +54,7 @@ public class Elevator extends SubsystemBase {
         private final DoubleSupplier targetRotations;
 
         private State(Supplier<Distance> targetHeight) {
-            this.targetRotations = () -> (targetHeight.get().in(Meters) / PULLEY_CIRCUFERENCE.in(Meters)) * GEAR_RATIO;
+            this.targetRotations = () -> (targetHeight.get().in(Meters) / PULLEY_CIRCUFERENCE.in(Meters)) / GEAR_RATIO;
         }
 
         @Override
@@ -145,7 +145,12 @@ public class Elevator extends SubsystemBase {
         sim.setInputVoltage(motorSim.getMotorVoltage());
         sim.update(0.02);
 
-        motorSim.setRawRotorPosition((sim.getPositionMeters() / PULLEY_CIRCUFERENCE.in(Meters)) * GEAR_RATIO);
-        motorSim.setRotorVelocity((sim.getVelocityMetersPerSecond() / PULLEY_CIRCUFERENCE.in(Meters)) * GEAR_RATIO);
+        motorSim.setRawRotorPosition((sim.getPositionMeters() / PULLEY_CIRCUFERENCE.in(Meters)) / GEAR_RATIO);
+        motorSim.setRotorVelocity((sim.getVelocityMetersPerSecond() / PULLEY_CIRCUFERENCE.in(Meters)) / GEAR_RATIO);
+
+        DogLog.log("Elevator/SimPosition", sim.getPositionMeters());
+        DogLog.log("Elevator/SimVelocity", sim.getVelocityMetersPerSecond());
+        DogLog.log("Elevator/SimAtUpperLimit", sim.hasHitUpperLimit());
+        DogLog.log("Elevator/SimAtLowerLimit", sim.hasHitLowerLimit());
     }
 }
