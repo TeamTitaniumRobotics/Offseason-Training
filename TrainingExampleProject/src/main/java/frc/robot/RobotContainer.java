@@ -15,6 +15,7 @@ public class RobotContainer {
   private Intake intake = new Intake();
   private Arm arm = new Arm();
   private Shooter shooter = new Shooter();
+  private final LED led = new LED();
 
   private CommandXboxController driverController = new CommandXboxController(0);
 
